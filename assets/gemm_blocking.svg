@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="510" viewBox="0 0 1100 510">
+<style>text{font-family:"Microsoft YaHei","SimHei",sans-serif;fill:#111827;font-size:16px}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#2563eb"/></marker></defs>
+<rect width="1100" height="510" fill="#ffffff"/>
+<text x="40" y="40" text-anchor="start" style="font-size:22px;fill:#111827">GEMM 分块：把数据搬入快存储后，多算几次再换块</text>
+<text x="40" y="72" text-anchor="start" style="font-size:15px;fill:#6b7280">图示描述数据复用；不表示真实 Cache 一定能容纳全部矩阵。</text>
+<rect x="40" y="110" width="470" height="330" rx="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="275.0" y="281.0" text-anchor="middle" style="font-size:16px;fill:#111827"></text>
+<rect x="590" y="110" width="470" height="330" rx="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="825.0" y="281.0" text-anchor="middle" style="font-size:16px;fill:#111827"></text>
+<text x="65" y="145" text-anchor="start" style="font-size:18px;fill:#111827">缺少有效复用的示意</text>
+<text x="615" y="145" text-anchor="start" style="font-size:18px;fill:#111827">Blocking 的示意</text>
+<rect x="75" y="185" width="160" height="65" rx="8" fill="#eff6ff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="155.0" y="223.5" text-anchor="middle" style="font-size:16px;fill:#111827">主存中的 A、B</text>
+<rect x="315" y="185" width="160" height="65" rx="8" fill="#eff6ff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="395.0" y="223.5" text-anchor="middle" style="font-size:16px;fill:#111827">计算单元</text>
+<line x1="235" y1="217" x2="315" y2="217" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="75" y="300" text-anchor="start" style="font-size:16px;fill:#111827">重复需要某数据时，它可能已被驱逐。</text>
+<text x="75" y="337" text-anchor="start" style="font-size:16px;fill:#111827">相同数据反复跨越主存边界。</text>
+<text x="75" y="395" text-anchor="start" style="font-size:15px;fill:#6b7280">F 不变，主存传输量 D 可能很大。</text>
+<rect x="625" y="185" width="140" height="65" rx="8" fill="#eff6ff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="695.0" y="223.5" text-anchor="middle" style="font-size:16px;fill:#111827">HBM / DRAM</text>
+<rect x="845" y="185" width="180" height="65" rx="8" fill="#eff6ff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="935.0" y="223.5" text-anchor="middle" style="font-size:16px;fill:#111827">Cache / SRAM</text>
+<line x1="765" y1="217" x2="845" y2="217" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="795" y="200" text-anchor="middle" style="font-size:13px;fill:#2563eb">分块搬入</text>
+<rect x="845" y="320" width="180" height="65" rx="8" fill="#eff6ff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="935.0" y="358.5" text-anchor="middle" style="font-size:16px;fill:#111827">计算多个乘加</text>
+<line x1="935" y1="250" x2="935" y2="320" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="625" y="304" text-anchor="start" style="font-size:16px;fill:#16a34a">A、B 子块留驻</text>
+<text x="625" y="341" text-anchor="start" style="font-size:16px;fill:#16a34a">C 子块累加</text>
+<text x="615" y="415" text-anchor="start" style="font-size:15px;fill:#6b7280">F 不变，D 减少，I = F/D 增大。</text>
+<text x="40" y="482" text-anchor="start" style="font-size:15px;fill:#6b7280">注意：若原实现已充分命中 Cache，分块不一定进一步减少 HBM 流量。</text>
+</svg>

@@ -1,0 +1,51 @@
+{
+  "notice": "All performance values are theoretical teaching estimates, not measurements.",
+  "ridge_flop_per_byte": 50.0,
+  "weight_GB": 14.0,
+  "prefill_FLOP": 14336000000000.0,
+  "prefill_intensity": 1024.0,
+  "prefill_lower_bound_ms": 143.35999999999999,
+  "decode_FLOP_per_step_B1": 14000000000.0,
+  "decode_intensity_B1": 1.0,
+  "decode_lower_bound_ms_B1": 7.0,
+  "kv_1024_bytes_MHA": 536870912,
+  "kv_8192_bytes_MHA": 4294967296,
+  "qwen_config_derived_params": 7721324544,
+  "ideal_weight_bandwidth_fraction_prefill": 0.04882812500000001,
+  "ideal_weight_bandwidth_fraction_decode_B64": 0.7812500000000001,
+  "hardware": [
+    {
+      "name": "计算优先",
+      "peak_TFLOPs": 200,
+      "bandwidth_TBs": 1,
+      "ridge": 200.0,
+      "upper_bounds_TFLOPs": {
+        "1": 1,
+        "64": 64,
+        "1024": 200
+      }
+    },
+    {
+      "name": "带宽优先",
+      "peak_TFLOPs": 50,
+      "bandwidth_TBs": 4,
+      "ridge": 12.5,
+      "upper_bounds_TFLOPs": {
+        "1": 4,
+        "64": 50,
+        "1024": 50
+      }
+    },
+    {
+      "name": "相对均衡",
+      "peak_TFLOPs": 100,
+      "bandwidth_TBs": 2,
+      "ridge": 50.0,
+      "upper_bounds_TFLOPs": {
+        "1": 2,
+        "64": 100,
+        "1024": 100
+      }
+    }
+  ]
+}

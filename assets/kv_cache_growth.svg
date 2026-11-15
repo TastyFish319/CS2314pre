@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
+<style>text{font-family:"Microsoft YaHei","SimHei",sans-serif;fill:#111827;font-size:16px}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#2563eb"/></marker></defs>
+<rect width="1100" height="520" fill="#ffffff"/>
+<text x="40" y="40" text-anchor="start" style="font-size:22px;fill:#111827">KV Cache 随 Decode 增长：每层均维护自己的 K、V</text>
+<text x="40" y="72" text-anchor="start" style="font-size:15px;fill:#6b7280">每个色块代表一个 Token 的一对 K/V 向量；本图仅画一个请求、一个层。</text>
+<text x="40" y="162" text-anchor="start" style="font-size:18px;fill:#111827">Prefill 后</text>
+<rect x="230" y="130" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="268.0" y="167.0" text-anchor="middle" style="font-size:16px;fill:#111827">x1</text>
+<rect x="320" y="130" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="358.0" y="167.0" text-anchor="middle" style="font-size:16px;fill:#111827">x2</text>
+<rect x="410" y="130" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="448.0" y="167.0" text-anchor="middle" style="font-size:16px;fill:#111827">x3</text>
+<rect x="500" y="130" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="538.0" y="167.0" text-anchor="middle" style="font-size:16px;fill:#111827">x4</text>
+<text x="810" y="163" text-anchor="start" style="font-size:16px;fill:#111827">最后位置预测 y1</text>
+<text x="40" y="282" text-anchor="start" style="font-size:18px;fill:#111827">Decode 第 1 步</text>
+<rect x="230" y="250" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="268.0" y="287.0" text-anchor="middle" style="font-size:16px;fill:#111827">x1</text>
+<rect x="320" y="250" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="358.0" y="287.0" text-anchor="middle" style="font-size:16px;fill:#111827">x2</text>
+<rect x="410" y="250" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="448.0" y="287.0" text-anchor="middle" style="font-size:16px;fill:#111827">x3</text>
+<rect x="500" y="250" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="538.0" y="287.0" text-anchor="middle" style="font-size:16px;fill:#111827">x4</text>
+<rect x="590" y="250" width="76" height="62" rx="8" fill="#dcfce7" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="628.0" y="287.0" text-anchor="middle" style="font-size:16px;fill:#111827">y1</text>
+<text x="810" y="283" text-anchor="start" style="font-size:16px;fill:#111827">输入 y1，预测 y2</text>
+<text x="40" y="402" text-anchor="start" style="font-size:18px;fill:#111827">Decode 第 2 步</text>
+<rect x="230" y="370" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="268.0" y="407.0" text-anchor="middle" style="font-size:16px;fill:#111827">x1</text>
+<rect x="320" y="370" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="358.0" y="407.0" text-anchor="middle" style="font-size:16px;fill:#111827">x2</text>
+<rect x="410" y="370" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="448.0" y="407.0" text-anchor="middle" style="font-size:16px;fill:#111827">x3</text>
+<rect x="500" y="370" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="538.0" y="407.0" text-anchor="middle" style="font-size:16px;fill:#111827">x4</text>
+<rect x="590" y="370" width="76" height="62" rx="8" fill="#dbeafe" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="628.0" y="407.0" text-anchor="middle" style="font-size:16px;fill:#111827">y1</text>
+<rect x="680" y="370" width="76" height="62" rx="8" fill="#dcfce7" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="718.0" y="407.0" text-anchor="middle" style="font-size:16px;fill:#111827">y2</text>
+<text x="810" y="403" text-anchor="start" style="font-size:16px;fill:#111827">输入 y2，预测 y3</text>
+<text x="230" y="475" text-anchor="start" style="font-size:16px;fill:#6b7280">旧 K/V 直接复用；当前 Q 读取可见 K/V；只追加当前输入 Token 的新 K/V。</text>
+</svg>
