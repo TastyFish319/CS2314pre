@@ -57,7 +57,9 @@ I^*=\frac{P_{\mathrm{peak}}}{BW_{\mathrm{peak}}}
 =184.32\ \mathrm{FLOP/Byte}.
 $$
 
-`I<I*` 时整体模型受带宽限制；`I>I*` 时受矩阵计算峰值限制。本文按乘加一次计 2 FLOPs；速率和流量使用十进制：1 GFLOP=10⁹ FLOP、1 TFLOP=10¹² FLOP、1 GB=10⁹ Byte、1 TB=10¹² Byte。容量单位使用二进制：1 GiB=2³⁰ Byte、1 MiB=2²⁰ Byte、1 KiB=2¹⁰ Byte。
+`I<I*` 时整体模型受带宽限制；`I>I*` 时受矩阵计算峰值限制。
+
+本文按乘加一次计 2 FLOPs；速率和流量使用十进制：1 GFLOP=10⁹ FLOP、1 TFLOP=10¹² FLOP、1 GB=10⁹ Byte、1 TB=10¹² Byte。容量单位使用二进制：1 GiB=2³⁰ Byte、1 MiB=2²⁰ Byte、1 KiB=2¹⁰ Byte。
 
 ## 2. Qwen3-8B 模型配置
 
@@ -76,7 +78,9 @@ $$
 | `V` | 词表大小 | 151936 |
 | `s` | 一个 BF16 元素的存储字节数 | 2 Byte |
 
-Q、K、V 分别表示查询、键和值张量，O Projection 将注意力输出映射回隐藏维度。Qwen3-8B 采用分组查询注意力（GQA）：每 4 个 Query heads 共享一组 K/V，但仍有 32 个 Query heads 参与注意力计算。因此，**注意力 FLOPs 使用 `H_q`，KV 存储使用 `H_kv`**。
+Q、K、V 分别表示查询、键和值张量，O Projection 将注意力输出映射回隐藏维度。
+
+Qwen3-8B 采用分组查询注意力（GQA）：每 4 个 Query heads 共享一组 K/V，但仍有 32 个 Query heads 参与注意力计算。因此，**注意力 FLOPs 使用 `H_q`，KV 存储使用 `H_kv`**。
 
 ### 2.2 参数量与每 Token 的线性计算
 
@@ -197,7 +201,7 @@ $$
 
 这里 `I_prefill` 表示 Prefill 算术强度。它高于脊点 184.32，因此理论性能上限取 294.912 TFLOP/s，时间下界约为 49.288 ms。其他 S 的结果使用完全相同的计算过程，完整场景表见第 6 节。
 
-### 3.4 额外激活流量的敏感性
+### 3.4 额外 Activation 流量的敏感性
 
 为了分析基础模型对中间数据流量的敏感程度，记 `e` 为**整个模型每个输入 Token 的额外 HBM 流量**，`D_prefill,ext` 为扩展后的流量：
 
@@ -206,8 +210,6 @@ D_{\mathrm{prefill,ext}}=D_{\mathrm{prefill}}+BS e.
 $$
 
 图 5.4 分别取 e=0、2 MiB/Token、8 MiB/Token，保持计算量不变，再计算 `F_prefill / D_prefill,ext`。例如 S=1024 时，三种算术强度依次为 **950.843、833.725、608.772 FLOP/Byte**。
-
-2 MiB、8 MiB 是敏感性假设，不是 Profiling 数据，也不是每层的额外流量。[FlashAttention](https://arxiv.org/abs/2205.14135) 和融合算子可以减少中间张量写回，但具体内核的实际 HBM 流量仍需测量。
 
 ## 4. Decode：从单步计算到 Batch 与上下文影响
 
@@ -356,7 +358,7 @@ $$
 
 [SVG 矢量版](../figures/01_roofline.svg)
 
-图中横坐标由第 3、4 节计算的 `I=F/D` 得到，纵坐标由第 1.1 节的 `P_roof` 得到。蓝色圆点是 Prefill，橙色方点是 C=1024 的 Decode。**数据点表示相应算术强度下的理论性能上限，图中没有实测性能点。**
+图中横坐标由第 3、4 节计算的 `I=F/D` 得到，纵坐标由第 1.1 节的 `P_roof` 得到。蓝色圆点是 Prefill，橙色方点是 C=1024 的 Decode。
 
 | Prefill 输入长度 S（B=1） | 计算量（TFLOP） | 基础流量（GB） | 算术强度（FLOP/Byte） | 性能上限（TFLOP/s） | 时间下界（ms） |
 |---:|---:|---:|---:|---:|---:|
