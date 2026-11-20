@@ -1,0 +1,12 @@
+module,parameters_all_layers,parameters_per_layer,matrix_flops_per_token,matrix_weight_bytes,note
+input_embedding,622329856,,0,0,lookup only; base matrix FLOPs=0
+q_proj,603979776,16777216,1207959552,1207959552,all transformer layers
+k_proj,150994944,4194304,301989888,301989888,all transformer layers
+v_proj,150994944,4194304,301989888,301989888,all transformer layers
+o_proj,603979776,16777216,1207959552,1207959552,all transformer layers
+mlp_gate,1811939328,50331648,3623878656,3623878656,all transformer layers
+mlp_up,1811939328,50331648,3623878656,3623878656,all transformer layers
+mlp_down,1811939328,50331648,3623878656,3623878656,all transformer layers
+lm_head,622329856,,1244659712,1244659712,one vocabulary position
+rmsnorm,299008,,0,0,nonmatrix; see report
+qk_norm,9216,256,0,0,nonmatrix; see report

@@ -1,0 +1,11 @@
+# Local Python environment and disposable working files
+/.venv_roofline/
+/.work/
+
+# Generated distribution packages; source, data and figures stay versioned
+/dist/
+
+# Python caches
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
