@@ -1,5 +1,7 @@
 # Final Report
 
+[目录与附件说明](README.md) · [理论计算工具](../qwen3_theory/qwen3_roofline/README.md) · [实测实验资料](../qwen3_experiments/README.md)
+
 ***为保留报告完整性，其中还是会有废话，但每一个 section 开头我都会加以说明重点怎么看，请关注粗斜体的 comments***
 
 # 一、理论分析
@@ -8,7 +10,7 @@
 
 ## 1. Roofline 与硬件配置
 
-***把 [1.2](#12-ascend-910b3-参数与单位) 的配置说明一下即可***
+***把 [1.2](#theory-hardware) 的配置说明一下即可***
 
 ### 1.1 Roofline 模型
 
@@ -42,6 +44,8 @@ t_{\mathrm{roof}}=\max\left(\frac{F}{P_{\mathrm{peak}}},\frac{D}{BW_{\mathrm{pea
 $$
 
 [Roofline 原始论文](https://doi.org/10.1145/1498765.1498785)
+
+<a id="theory-hardware"></a>
 
 ### 1.2 Ascend 910B3 参数与单位
 
@@ -286,9 +290,11 @@ $$
 
 ***汇报重点：slides 上重点放以下几张图表，并进行解释***
 
-***[5.1](#51-prefill-与-decode-的计算组成), [5.3](#53-每个输出-token-的-hbm-流量), [6](#6-roofline-上的理论场景)***
+***[5.1](#theory-compute-mix), [5.3](#theory-decode-traffic), [6](#theory-roofline)***
 
 ***其他两张图视内容量决定，可以不放***
+
+<a id="theory-compute-mix"></a>
 
 ### 5.1 Prefill 与 Decode 的计算组成
 
@@ -308,6 +314,8 @@ $$
 
 短上下文下，权重摊销能明显提高算术强度；长上下文下，KV 占比增加，曲线更早趋平。小 Batch 时，更长上下文也增加了 Attention 计算，算术强度不一定更低，因此曲线可能交叉。所有曲线仍低于本硬件的脊点。
 
+<a id="theory-decode-traffic"></a>
+
 ### 5.3 每个输出 Token 的 HBM 流量
 
 ![Decode traffic per output token](../qwen3_theory/qwen3_roofline/figures/04_decode_traffic.png)
@@ -325,6 +333,8 @@ $$
 [SVG 矢量版](../qwen3_theory/qwen3_roofline/figures/05_prefill_sensitivity.svg)
 
 **数据来源：第 3.4 节的扩展流量，分子仍使用第 3.1 节的 Prefill FLOPs。** 额外流量越大，算术强度越低；2 MiB、8 MiB 均是人为设置的敏感性参数。图中较长序列在三种假设下仍位于脊点上方，只能说明该整体模型仍判为计算受限，不能推断实际内核没有访存代价。
+
+<a id="theory-roofline"></a>
 
 ## 6. Roofline 上的理论场景
 
@@ -357,11 +367,146 @@ Decode 的较小 Batch 受到权重流量限制；Batch 增大后，KV 流量逐
 
 以上结论依赖理想权重复用、BF16 KV 和简化激活流量。整体 Roofline 下界没有逐项累加串行算子及非矩阵操作的耗时，也没有覆盖真实内存峰值。完整数值见 [Prefill CSV](../qwen3_theory/qwen3_roofline/results/prefill_results.csv) 与 [Decode CSV](../qwen3_theory/qwen3_roofline/results/decode_results.csv)；复算方法见 [README](../qwen3_theory/qwen3_roofline/README.md)。
 
-### 7. 参考资料
 
-1. [Qwen3-8B 官方配置](https://huggingface.co/Qwen/Qwen3-8B/blob/main/config.json)：模型维度、GQA 与权重配置。
-2. [Transformers v4.51.3 Qwen3 实现](https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/models/qwen3/modeling_qwen3.py)：QK Norm、门控 MLP 与 logits 选择。
-3. [Roofline 原始论文](https://doi.org/10.1145/1498765.1498785)：性能模型；[Berkeley 作者版本](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-134.html) 可公开访问。
-4. [CSET 对 Ascend 910B 系列的分析](https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/)：带宽、综合吞吐口径与频率推算。
-5. [Huawei Cloud MFU 方法资料](https://github.com/huaweicloud/huaweicloud-skills/blob/master/skills/ai/modelarts/huawei-cloud-ascend-op-mfu-calculator/references/mfu-calculation-methodology.md)：矩阵峰值参考与 FLOPs 计算方法。
-6. [FlashAttention 原始论文](https://arxiv.org/abs/2205.14135)：通过分块减少 Attention 的 HBM 访问。
+
+
+# 二、实测数据
+
+***这部分主要是我自己操刀写的，可以都看看，都有采用价值***
+
+## 1. 实验配置
+
+- 设备：Ascend 910B3
+- 模型：Qwen3-8B，BF16
+- 模型性能优化：`ge_graph` 图模式 + RMSNorm/AddRMSNorm 融合
+
+## 2. 实机性能在 Roofline 下的呈现
+
+![实测屋顶线](../qwen3_experiments/figures/roofline_validation_measured.png)
+
+[实测分析报告](../qwen3_experiments/docs/hardware_design.md) · [原始测试汇总](../qwen3_experiments/results/bench_runs.csv) · [屋顶标定结果](../qwen3_experiments/results/roof_calibration.json)
+
+## 3. 图片解读
+
+### 3.1 超参数矩阵
+
+| 配置 | 输入 token | decode batch | max_new_tokens |
+|---|---|---|---|
+| tok256_b1 | 256 | 1 | 64 |
+| tok256_b4 | 256 | 4 | 64 |
+| tok1024_b1 | 1024 | 1 | 64 |
+| tok1024_b4 | 1024 | 4 | 64 |
+
+### 3.2 Roofline 绘制
+
+图中的 roofline 是根据实机标定的算力与带宽峰值，按照理论分析的计算过程绘制的
+
+## 4. 数据分析
+
+### 4.1 Decode 分析
+
+- **几乎将带宽吃满**
+- decode 的算力用量只有 0.057~0.236 ms，占峰值的 0.02%~0.09%
+- 带宽下限约 12.3 ms（权重 15.1 GB 每步流一遍），实测 16.3~18.2 ms
+- 达成率为实测带宽屋顶的 **70.0%~75.4%**，即 `0.93~3.48 TF/s` 对应 `1.25~4.95 TF/s`
+- 结论：decode 已经没有数量级级别的软件空间；除非减少字节，否则上限约 1.3~1.4x
+
+### 4.2 Prefill 分析
+
+- 整体算力利用率：
+
+| 配置 | 主要矩阵运算量（TFLOP） | Prefill 耗时（ms） | 有效矩阵吞吐（TFLOP/s） | 实测峰值利用率 | 标称参考峰值利用率 |
+|---|---:|---:|---:|---:|---:|
+| tok256_b1 | 3.576880 | 70.29 | 50.89 | 19.05% | 17.26% |
+| tok256_b4 | 14.307522 | 111.19 | 128.68 | 48.17% | 43.63% |
+| tok1024_b1 | 14.535716 | 101.66 | 142.98 | 53.53% | 48.48% |
+| tok1024_b4 | 58.142864 | 325.91 | 178.40 | 66.79% | 60.49% |
+
+- 矩阵乘法算力利用率：
+
+| 统计范围 | 矩阵吞吐（TFLOP/s） | 实测峰值利用率 | 标称参考峰值利用率 |
+|---|---:|---:|---:|
+| 全部 MatMul 的执行时间范围 | 223.60 | 83.71% | 75.82% |
+| gate_up 单类算子的执行时间范围 | 243.60 | 91.19% | 82.60% |
+
+- 整体而言尚未遇到算力瓶颈，但矩阵乘法阶段已经几乎将算力用到极致
+- 因为某些原因，矩阵乘法阶段的算力利用率不高
+- 较大规模 Prefill 的权重复用较充分，整体更偏向计算受限，提高带宽的收益通常小于提高有效计算吞吐
+- 短输入则需要同时考虑带宽、小矩阵效率与调度开销
+
+### 4.3 权重流量与 KV 流量（在搬什么数据？有没有可能少搬？）
+
+KV = 147456 B/token，权重 = 15.136 GB：
+
+| 场景 | KV 字节 | 权重 : KV |
+|---|---|---|
+| 1K ctx, B1 | 0.15 GB | 99 : 1 |
+| 8K ctx, B8 | 9.7 GB | 61 : 39 |
+| 32K ctx, B8 | 38.7 GB | 28 : 72 |
+| 32K ctx, B16 | 77.3 GB | 16 : 84 |
+| 128K ctx, B8 | 154.6 GB | 9 : 91 |
+
+- 都有带宽压力，提高带宽需求明显，但难以满足如此巨大的需求
+- 短上下文，带宽压力主要来自权重搬运，考虑量化权重等手段（权重无法一直在片上）
+- 长上下文，KV Cache 的压力显著增加，优化策略可以转向量化 KV Cache 等，让其尽可能多地留在片上，减少搬运量
+
+短上下文优先保障权重的连续高速读取；长上下文、大 Batch 则要把更多存储容量、缓存和访存调度能力用于 KV。具体比例随 Batch 与上下文长度动态调整。
+
+***后两部分是 section 4 的附录***
+
+### 4.4 下限模型
+
+对任一阶段，理论最短时间取“算力下限”和“带宽下限”的较大者：
+
+```
+T_floor = max( FLOPs / 267.12e12 , Bytes / 1.2364e12 )
+```
+
+注意这里的分母是**实测可达值**，因此得到的是“在这台机器上、这套软件栈下”的下限，而不是数据手册下限。
+
+### 4.5 下限与实测对比
+
+| 场景 | 计算下限 | 带宽下限 | T_floor | 实测 | 实测/T_floor |
+|---|---|---|---|---|---|
+| prefill 256 tok B1 | 13.39 ms | 12.27 ms | 13.39 ms | 70.29 ms | **5.25x** |
+| prefill 256 tok B4 | 53.56 ms | 12.36 ms | 53.56 ms | 111.19 ms | 2.08x |
+| prefill 1024 tok B1 | 54.42 ms | 12.36 ms | 54.42 ms | 101.66 ms | 1.87x |
+| prefill 1024 tok B4 | 217.66 ms | 12.73 ms | 217.66 ms | 325.91 ms | 1.50x |
+| decode B1 | 0.057 ms | 12.28 ms | 12.28 ms | 16.28 ms | **1.33x** |
+| decode B4 | 0.229 ms | 12.38 ms | 12.38 ms | 17.61 ms | 1.42x |
+
+## 5. Profiling 分析
+
+### 5.1 Prefill Profiling
+
+![prof-PREFILL](assets/profiling/prof-PREFILL.png)
+
+- 矩阵乘法占据多数时间
+- 较长的 FREE 时段，是 NPU 在等待 CPU 完成 Attention 的输入准备和算子下发，调度层面可以优化
+- 仍存在独立的小算子，其启动与调度也会影响效率
+- 规模越大，调度、启动层面的开销占比会变小（Matmul 的占比会升高）
+
+### 5.2 Decode Profiling
+
+![prof-DECODE](assets/profiling/prof-DECODE.png)
+
+- 由屋顶线分析，其优化空间相对较小
+- 大段 FREE 时段在搬运数据
+- 小操作较多，能否融合（？）
+- 通过 Batching，共享权重读取，提高吞吐
+
+## 6. 总结
+
+**Prefill：**
+
+- 算力吃紧，提高其配比
+- 调度层面优化空间
+- 考虑算子融合，减少小算子启动开销
+- 根据规模大小，优化效果会有区别
+
+**Decode：**
+
+- 带宽吃紧，可以提升
+- 物理层面上，带宽永远无法满足如此大的需求，考虑量化
+- 根据上下文长度不同，量化侧重点有所不同，权重 / KV Cache
+- 适度提高 Batch Size，一次读取权重计算多个token（不能无限提高）

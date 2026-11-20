@@ -1,0 +1,209 @@
+rm: cannot remove '/root/atc_data/': Permission denied
+====================> 启动离线推理 (model=qwen, yaml=/mnt/workspace/gitCode/cann/cann-learning-hub/Sources/model_inference_optimization/qwen3_8b/run_outputs/roofline_empirical_ge_graph/yaml/roof_bench_s1024_b1_t64_r1_20261119_170433_411130.yaml)
+world_size = 1
+[INFO][2026-11-19 17:04:48.812][patch_getenv.py:15] get env LOCAL_RANK = 0
+[INFO][2026-11-19 17:04:48.812][patch_getenv.py:15] get env RANK_OFFSET = 0
+[INFO][2026-11-19 17:04:48.812][patch_getenv.py:15] get env LC_ALL = en_US.UTF-8
+[INFO][2026-11-19 17:04:48.818][patch_getenv.py:15] get env WORK_DIR = /mnt/workspace/gitCode/cann/cann-learning-hub/tutorials/llm_inference/qwen3_8b/src/inference_scripts/recipe_qwen3_8b/models/qwen
+[INFO][2026-11-19 17:04:48.818][patch_getenv.py:15] get env RES_PATH = res/20261119/qwen3_8b_roof_bench_s1024_b1_t64_r1_20261119_170433_411130
+[INFO][2026-11-19 17:04:48.819][infer.py:146] Inference Configuration
+[INFO][2026-11-19 17:04:48.819][infer.py:147] InferenceConfig(model_config=ModelConfig(model_name='qwen3_8b', model_path='/home/developer/.cache/modelscope/models/Qwen--Qwen3-8B/snapshots/master', output_path='/mnt/workspace/gitCode/cann/cann-learning-hub/tutorials/llm_inference/qwen3_8b/src/inference_scripts/recipe_qwen3_8b/models/qwen/res/20261119/qwen3_8b_roof_bench_s1024_b1_t64_r1_20261119_170433_411130', dtype='bfloat16', with_ckpt=True, next_n=0, platform_version=<PlatformVersion.A3: 'A3'>, exe_mode='ge_graph', enable_cache_compile=False, enable_static_kernel=False, force_eplb=False, enable_profiler=False, enable_weight_nz=True, custom_params={'enable_npu_rmsnorm': True, 'enable_add_rmsnorm': True, 'enable_prefetch': False, 'prefetch_size': 33554432}), data_config=DataConfig(dataset='default', dataset_path='/mnt/workspace/gitCode/cann/cann-learning-hub/qwen3_empirical_roofline_validation/qwen3_empirical_roofline/dataset_long', input_truncated_len=1024), parallel_config=ParallelConfig(world_size=1, global_rank=0, local_rank=0, attn_tp_size=1, attn_dp_size=1, embed_tp_size=1, embed_dp_size=1, moe_tp_size=1, moe_ep_size=1, lmhead_tp_size=1, dense_tp_size=1, o_proj_tp_size=1, cp_size=1, kvp_size=1), scheduler_config=SchedulerConfig(batch_size=1, max_new_tokens=64, max_prefill_tokens=1024, batch_size_per_dp_rank=1, mem_fraction_static=0.85, block_size=128, num_reserved_decode_tokens=64, decode_only=False, enable_thinking=False), disagg_config=DisaggConfig(disaggregation_mode='NONE'))
+[INFO][2026-11-19 17:04:48.819][execution_engine.py:104] Set execution using npu index: 0, global: 0
+[INFO][2026-11-19 17:04:50.183][patch_getenv.py:15] get env ASCEND_RT_VISIBLE_DEVICES = 0
+[INFO][2026-11-19 17:04:50.206][execution_engine.py:126] Loading main model...
+/home/developer/.local/lib/python3.11/site-packages/transformers/modeling_rope_utils.py:1036: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+[INFO][2026-11-19 17:04:50.211][model_worker.py:185] Try to load pretrained model in path: /home/developer/.cache/modelscope/models/Qwen--Qwen3-8B/snapshots/master
+[INFO][2026-11-19 17:04:50.212][comm_manager.py:442] CommManager: group 'attn_tp_group' registered (my_subgroup=[0], reuse=True, rank_in_group=0)
+[INFO][2026-11-19 17:04:50.212][comm_manager.py:442] CommManager: group 'lmhead_tp_group' registered (my_subgroup=[0], reuse=True, rank_in_group=0)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading safetensors checkpoint shards:   0% Completed | 0/5 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  20% Completed | 1/5 [00:00<00:00,  7.82it/s]
+Loading safetensors checkpoint shards:  40% Completed | 2/5 [00:00<00:01,  2.65it/s]
+Loading safetensors checkpoint shards:  60% Completed | 3/5 [00:01<00:00,  2.03it/s]
+Loading safetensors checkpoint shards:  80% Completed | 4/5 [00:01<00:00,  1.85it/s]
+Loading safetensors checkpoint shards: 100% Completed | 5/5 [00:02<00:00,  1.83it/s]
+Loading safetensors checkpoint shards: 100% Completed | 5/5 [00:02<00:00,  2.01it/s]
+
+[INFO][2026-11-19 17:05:17.618][default_loader.py:173] Loading weights took 2.58 seconds
+[INFO][2026-11-19 17:05:24.775][patch_getenv.py:15] get env LD_LIBRARY_PATH = /home/developer/Ascend/cann-9.0.0/lib64:/home/developer/Ascend/cann-9.0.0/lib64/plugin/opskernel:/home/developer/Ascend/cann-9.0.0/lib64/plugin/nnengine:/home/developer/Ascend/cann-9.0.0/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/aarch64:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/driver/lib64:/opt/buildtools/Python-3.11.4/lib:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/driver/lib64:/opt/buildtools/Python-3.11.4/lib:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/opt/buildtools/python-3.11.4/lib:
+[INFO][2026-11-19 17:05:24.775][patch_getenv.py:15] get env PATH = /home/developer/Ascend/cann-9.0.0/bin:/home/developer/Ascend/cann-9.0.0/tools/ccec_compiler/bin:/home/developer/Ascend/cann-9.0.0/tools/profiler/bin:/home/developer/Ascend/cann-9.0.0/tools/ascend_system_advisor/asys:/home/developer/Ascend/cann-9.0.0/tools/show_kernel_debug_data:/home/developer/Ascend/cann-9.0.0/tools/msobjdump:/usr/local/bin:/home/developer/.local/share/opencode/bin:/home/developer/.opencode/bin:/opt/buildtools/Python-3.11.4/bin:/home/developer/.nvm/versions/node/v18.19.1/bin:/home/developer/.opencode/bin:/opt/buildtools/Python-3.11.4/bin:/home/developer/.local/bin:/home/developer/bin:/usr/local/cmake/bin:/opt/buildtools/python-3.11.4/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/default-java/bin
+[INFO][2026-11-19 17:05:25.728][patch_getenv.py:15] get env ASCEND_OPP_PATH = /home/developer/Ascend/cann-9.0.0/opp
+[INFO][2026-11-19 17:05:26.801][patch_getenv.py:15] get env LOGNAME = root
+[INFO][2026-11-19 17:05:27.461][patch_getenv.py:15] get env HOME = /home/developer
+[INFO][2026-11-19 17:05:27.568][patch_getenv.py:15] get env TE_AUTO_RESTART_COUNTER = 0
+[INFO][2026-11-19 17:05:31.258][patch_getenv.py:15] get env PYTHONPATH = /home/developer/Ascend/cann-9.0.0/python/site-packages:/home/developer/Ascend/cann-9.0.0/opp/built-in/op_impl/ai_core/tbe:/mnt/workspace/gitCode/cann/cann-learning-hub/tutorials/llm_inference/qwen3_8b/src/inference_scripts/recipe_qwen3_8b:
+[INFO][2026-11-19 17:05:31.689][execution_engine.py:161] Initializing KV cache with PageAttention management.
+[INFO][2026-11-19 17:05:32.082][single_type_kv_cache_manager.py:283] [KVCacheManager] attn_type=FullAttention -> manager=FullAttentionManager, manager_kwargs={'block_num': 10, 'block_size': 128, 'max_model_len': 1088}
+[INFO][2026-11-19 17:05:32.082][execution_engine.py:371] Starting warm-up...
+[INFO][2026-11-19 17:05:32.082][execution_engine.py:387] Warm-up [Main]: executing model prefill step...
+[INFO][2026-11-19 17:05:41.149][execution_engine.py:418] Warm-up [Main]: executing model decode step...
+[INFO][2026-11-19 17:05:41.157][execution_engine.py:427] Warm-up: triggering graph compilation...
+[INFO][2026-11-19 17:05:41.157][model_worker.py:323] The final model structure is: 
+ QwenForCausalLM(
+  (model): QwenModel(
+    (embed_tokens): VocabParallelEmbedding(151936, 4096)
+    (layers): ModuleList(
+      (0-35): 36 x QwenDecoderLayer(
+        (self_attn): QwenAttention(
+          (merged_qkv_proj): QKVParallelLinear(in_features=4096, output_features=6144, bias=False, tp_size=1)
+          (q_norm): QwenRMSNorm()
+          (k_norm): QwenRMSNorm()
+          (o_proj): RowParallelLinear(input_features=4096, output_features=4096, bias=False, tp_size=1)
+        )
+        (mlp): QwenMLP(
+          (gate_up_proj): MergedColumnParallelLinear()
+          (down_proj): RowParallelLinear(input_features=12288, output_features=4096, bias=False, tp_size=1)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): QwenRMSNorm()
+        (post_attention_layernorm): QwenRMSNorm()
+      )
+    )
+    (norm): QwenRMSNorm()
+    (rotary_emb): QwenRotaryEmbedding()
+  )
+  (lm_head): ColumnParallelLinear(in_features=4096, output_features=151936, bias=False, tp_size=1)
+)
+[INFO][2026-11-19 17:05:41.161][model_worker.py:325] Try to compile model
+[INFO][2026-11-19 17:05:41.180][patch_getenv.py:15] get env TORCHINDUCTOR_CACHE_DIR = /tmp/torchinductor_root
+/home/developer/.local/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:1618: UserWarning: When enable frozen_parameter, Parameters and input tensors with immutable data_ptr marked by `torch._dynamo.mark_static_address()` will be considered frozen. Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn('When enable frozen_parameter, Parameters and input tensors with immutable data_ptr '
+/home/developer/.local/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:1618: UserWarning: When enable frozen_parameter, Parameters and input tensors with immutable data_ptr marked by `torch._dynamo.mark_static_address()` will be considered frozen. Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn('When enable frozen_parameter, Parameters and input tensors with immutable data_ptr '
+...[INFO][2026-11-19 17:06:44.799][execution_engine.py:439] Warm-up completed successfully.
+[INFO][2026-11-19 17:06:44.988][scheduler.py:553] [Main] Inference time (prefill): 101.66 ms
+[INFO][2026-11-19 17:06:44.988][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"prefill","step":0,"requests":1,"request_ids":[0],"prompt_tokens":[1024],"total_prefill_tokens":1024,"packed_prefill":false,"padding_tokens":0}
+[INFO][2026-11-19 17:06:45.009][scheduler.py:553] [Main] Inference time (decode): 18.34 ms
+[INFO][2026-11-19 17:06:45.010][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":1,"requests":1,"request_ids":[0],"context_lengths":[1023],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.030][scheduler.py:553] [Main] Inference time (decode): 17.26 ms
+[INFO][2026-11-19 17:06:45.030][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":2,"requests":1,"request_ids":[0],"context_lengths":[1024],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.050][scheduler.py:553] [Main] Inference time (decode): 17.09 ms
+[INFO][2026-11-19 17:06:45.050][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":3,"requests":1,"request_ids":[0],"context_lengths":[1025],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.070][scheduler.py:553] [Main] Inference time (decode): 17.11 ms
+[INFO][2026-11-19 17:06:45.070][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":4,"requests":1,"request_ids":[0],"context_lengths":[1026],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.090][scheduler.py:553] [Main] Inference time (decode): 17.13 ms
+[INFO][2026-11-19 17:06:45.090][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":5,"requests":1,"request_ids":[0],"context_lengths":[1027],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.110][scheduler.py:553] [Main] Inference time (decode): 17.00 ms
+[INFO][2026-11-19 17:06:45.110][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":6,"requests":1,"request_ids":[0],"context_lengths":[1028],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.130][scheduler.py:553] [Main] Inference time (decode): 16.91 ms
+[INFO][2026-11-19 17:06:45.130][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":7,"requests":1,"request_ids":[0],"context_lengths":[1029],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.149][scheduler.py:553] [Main] Inference time (decode): 16.83 ms
+[INFO][2026-11-19 17:06:45.149][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":8,"requests":1,"request_ids":[0],"context_lengths":[1030],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.169][scheduler.py:553] [Main] Inference time (decode): 16.91 ms
+[INFO][2026-11-19 17:06:45.169][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":9,"requests":1,"request_ids":[0],"context_lengths":[1031],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.189][scheduler.py:553] [Main] Inference time (decode): 16.91 ms
+[INFO][2026-11-19 17:06:45.189][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":10,"requests":1,"request_ids":[0],"context_lengths":[1032],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.208][scheduler.py:553] [Main] Inference time (decode): 16.93 ms
+[INFO][2026-11-19 17:06:45.208][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":11,"requests":1,"request_ids":[0],"context_lengths":[1033],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.228][scheduler.py:553] [Main] Inference time (decode): 16.88 ms
+[INFO][2026-11-19 17:06:45.228][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":12,"requests":1,"request_ids":[0],"context_lengths":[1034],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.248][scheduler.py:553] [Main] Inference time (decode): 16.92 ms
+[INFO][2026-11-19 17:06:45.248][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":13,"requests":1,"request_ids":[0],"context_lengths":[1035],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.267][scheduler.py:553] [Main] Inference time (decode): 16.90 ms
+[INFO][2026-11-19 17:06:45.267][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":14,"requests":1,"request_ids":[0],"context_lengths":[1036],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.287][scheduler.py:553] [Main] Inference time (decode): 16.81 ms
+[INFO][2026-11-19 17:06:45.287][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":15,"requests":1,"request_ids":[0],"context_lengths":[1037],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.306][scheduler.py:553] [Main] Inference time (decode): 16.89 ms
+[INFO][2026-11-19 17:06:45.307][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":16,"requests":1,"request_ids":[0],"context_lengths":[1038],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.326][scheduler.py:553] [Main] Inference time (decode): 16.90 ms
+[INFO][2026-11-19 17:06:45.326][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":17,"requests":1,"request_ids":[0],"context_lengths":[1039],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.346][scheduler.py:553] [Main] Inference time (decode): 17.00 ms
+[INFO][2026-11-19 17:06:45.347][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":18,"requests":1,"request_ids":[0],"context_lengths":[1040],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.366][scheduler.py:553] [Main] Inference time (decode): 17.00 ms
+[INFO][2026-11-19 17:06:45.367][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":19,"requests":1,"request_ids":[0],"context_lengths":[1041],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.386][scheduler.py:553] [Main] Inference time (decode): 17.13 ms
+[INFO][2026-11-19 17:06:45.387][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":20,"requests":1,"request_ids":[0],"context_lengths":[1042],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.406][scheduler.py:553] [Main] Inference time (decode): 17.16 ms
+[INFO][2026-11-19 17:06:45.407][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":21,"requests":1,"request_ids":[0],"context_lengths":[1043],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.426][scheduler.py:553] [Main] Inference time (decode): 16.97 ms
+[INFO][2026-11-19 17:06:45.426][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":22,"requests":1,"request_ids":[0],"context_lengths":[1044],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.446][scheduler.py:553] [Main] Inference time (decode): 16.92 ms
+[INFO][2026-11-19 17:06:45.446][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":23,"requests":1,"request_ids":[0],"context_lengths":[1045],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.465][scheduler.py:553] [Main] Inference time (decode): 16.83 ms
+[INFO][2026-11-19 17:06:45.465][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":24,"requests":1,"request_ids":[0],"context_lengths":[1046],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.485][scheduler.py:553] [Main] Inference time (decode): 16.77 ms
+[INFO][2026-11-19 17:06:45.485][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":25,"requests":1,"request_ids":[0],"context_lengths":[1047],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.504][scheduler.py:553] [Main] Inference time (decode): 16.79 ms
+[INFO][2026-11-19 17:06:45.504][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":26,"requests":1,"request_ids":[0],"context_lengths":[1048],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.523][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:45.524][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":27,"requests":1,"request_ids":[0],"context_lengths":[1049],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.543][scheduler.py:553] [Main] Inference time (decode): 16.82 ms
+[INFO][2026-11-19 17:06:45.543][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":28,"requests":1,"request_ids":[0],"context_lengths":[1050],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.562][scheduler.py:553] [Main] Inference time (decode): 16.83 ms
+[INFO][2026-11-19 17:06:45.562][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":29,"requests":1,"request_ids":[0],"context_lengths":[1051],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.582][scheduler.py:553] [Main] Inference time (decode): 16.81 ms
+[INFO][2026-11-19 17:06:45.582][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":30,"requests":1,"request_ids":[0],"context_lengths":[1052],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.601][scheduler.py:553] [Main] Inference time (decode): 16.79 ms
+[INFO][2026-11-19 17:06:45.601][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":31,"requests":1,"request_ids":[0],"context_lengths":[1053],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.621][scheduler.py:553] [Main] Inference time (decode): 16.76 ms
+[INFO][2026-11-19 17:06:45.621][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":32,"requests":1,"request_ids":[0],"context_lengths":[1054],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.640][scheduler.py:553] [Main] Inference time (decode): 16.81 ms
+[INFO][2026-11-19 17:06:45.640][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":33,"requests":1,"request_ids":[0],"context_lengths":[1055],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.659][scheduler.py:553] [Main] Inference time (decode): 16.77 ms
+[INFO][2026-11-19 17:06:45.659][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":34,"requests":1,"request_ids":[0],"context_lengths":[1056],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.679][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:45.679][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":35,"requests":1,"request_ids":[0],"context_lengths":[1057],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.698][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:45.698][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":36,"requests":1,"request_ids":[0],"context_lengths":[1058],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.717][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:45.717][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":37,"requests":1,"request_ids":[0],"context_lengths":[1059],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.737][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:45.737][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":38,"requests":1,"request_ids":[0],"context_lengths":[1060],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.756][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:45.756][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":39,"requests":1,"request_ids":[0],"context_lengths":[1061],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.776][scheduler.py:553] [Main] Inference time (decode): 16.99 ms
+[INFO][2026-11-19 17:06:45.776][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":40,"requests":1,"request_ids":[0],"context_lengths":[1062],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.796][scheduler.py:553] [Main] Inference time (decode): 16.81 ms
+[INFO][2026-11-19 17:06:45.796][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":41,"requests":1,"request_ids":[0],"context_lengths":[1063],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.815][scheduler.py:553] [Main] Inference time (decode): 16.82 ms
+[INFO][2026-11-19 17:06:45.815][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":42,"requests":1,"request_ids":[0],"context_lengths":[1064],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.835][scheduler.py:553] [Main] Inference time (decode): 16.78 ms
+[INFO][2026-11-19 17:06:45.835][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":43,"requests":1,"request_ids":[0],"context_lengths":[1065],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.854][scheduler.py:553] [Main] Inference time (decode): 16.79 ms
+[INFO][2026-11-19 17:06:45.854][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":44,"requests":1,"request_ids":[0],"context_lengths":[1066],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.874][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:45.874][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":45,"requests":1,"request_ids":[0],"context_lengths":[1067],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.893][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:45.893][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":46,"requests":1,"request_ids":[0],"context_lengths":[1068],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.913][scheduler.py:553] [Main] Inference time (decode): 16.83 ms
+[INFO][2026-11-19 17:06:45.913][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":47,"requests":1,"request_ids":[0],"context_lengths":[1069],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.932][scheduler.py:553] [Main] Inference time (decode): 16.83 ms
+[INFO][2026-11-19 17:06:45.932][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":48,"requests":1,"request_ids":[0],"context_lengths":[1070],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.952][scheduler.py:553] [Main] Inference time (decode): 16.95 ms
+[INFO][2026-11-19 17:06:45.952][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":49,"requests":1,"request_ids":[0],"context_lengths":[1071],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.971][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:45.971][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":50,"requests":1,"request_ids":[0],"context_lengths":[1072],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:45.991][scheduler.py:553] [Main] Inference time (decode): 16.82 ms
+[INFO][2026-11-19 17:06:45.991][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":51,"requests":1,"request_ids":[0],"context_lengths":[1073],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.010][scheduler.py:553] [Main] Inference time (decode): 16.82 ms
+[INFO][2026-11-19 17:06:46.010][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":52,"requests":1,"request_ids":[0],"context_lengths":[1074],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.030][scheduler.py:553] [Main] Inference time (decode): 16.77 ms
+[INFO][2026-11-19 17:06:46.030][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":53,"requests":1,"request_ids":[0],"context_lengths":[1075],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.049][scheduler.py:553] [Main] Inference time (decode): 16.81 ms
+[INFO][2026-11-19 17:06:46.049][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":54,"requests":1,"request_ids":[0],"context_lengths":[1076],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.069][scheduler.py:553] [Main] Inference time (decode): 17.09 ms
+[INFO][2026-11-19 17:06:46.069][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":55,"requests":1,"request_ids":[0],"context_lengths":[1077],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.089][scheduler.py:553] [Main] Inference time (decode): 16.82 ms
+[INFO][2026-11-19 17:06:46.089][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":56,"requests":1,"request_ids":[0],"context_lengths":[1078],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.108][scheduler.py:553] [Main] Inference time (decode): 16.83 ms
+[INFO][2026-11-19 17:06:46.108][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":57,"requests":1,"request_ids":[0],"context_lengths":[1079],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.128][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:46.128][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":58,"requests":1,"request_ids":[0],"context_lengths":[1080],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.147][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:46.147][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":59,"requests":1,"request_ids":[0],"context_lengths":[1081],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.167][scheduler.py:553] [Main] Inference time (decode): 16.80 ms
+[INFO][2026-11-19 17:06:46.167][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":60,"requests":1,"request_ids":[0],"context_lengths":[1082],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.186][scheduler.py:553] [Main] Inference time (decode): 16.85 ms
+[INFO][2026-11-19 17:06:46.186][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":61,"requests":1,"request_ids":[0],"context_lengths":[1083],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.206][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:46.206][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":62,"requests":1,"request_ids":[0],"context_lengths":[1084],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.225][scheduler.py:553] [Main] Inference time (decode): 16.82 ms
+[INFO][2026-11-19 17:06:46.225][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":63,"requests":1,"request_ids":[0],"context_lengths":[1085],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.245][scheduler.py:553] [Main] Inference time (decode): 16.84 ms
+[INFO][2026-11-19 17:06:46.245][scheduler.py:202] [ROOFLINE_METRIC] {"phase":"decode","step":64,"requests":1,"request_ids":[0],"context_lengths":[1086],"main_query_tokens":1,"mtp_next_n":0}
+[INFO][2026-11-19 17:06:46.245][infer.py:99] Request 0: outputs:  cost scales with the prompt length, whereas the decode step streams every weight matrix once per generated token regardless of context. Measuring both stages separately therefore separates a compute bound regime from a memory bound regime and makes the roofline model directly comparable with reality.
+
+Section 7. A retrieval augmented generation pipeline first encodes the incoming
+
+[INFO][2026-11-19 17:06:46.247][infer.py:127] qwen3_8b decode average inference time cost is 16.85 ms

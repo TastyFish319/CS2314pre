@@ -1,0 +1,5 @@
+﻿phase,Device_id,Step,Computing,Communication(Not Overlapped),Overlapped,Communication,Free,Stage,Bubble,Communication(Not Overlapped and Exclude Receive),Preparing
+prefill,0,0,83185.06000000006,0,0,0,31481.220000000216,114666.25,0,0,1664.5
+decode,0,3,15245.919999999987,0,0,0,6830.840000000129,22076.5,0,0,1649.25
+decode,0,4,15225.679999999991,0,0,0,6130.920000000115,21356.5,0,0,1451.0
+decode,0,5,15222.939999999991,0,0,0,4243.839999999993,19467.0,0,0,1379.0

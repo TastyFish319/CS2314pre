@@ -1,0 +1,28 @@
+model_config:
+  model_name: qwen3_8b
+  model_path: /home/developer/.cache/modelscope/models/Qwen--Qwen3-8B/snapshots/master
+  dtype: bfloat16
+  exe_mode: ge_graph
+  enable_profiler: false
+  with_ckpt: true
+  enable_cache_compile: false
+  enable_static_kernel: false
+  custom_params:
+    enable_npu_rmsnorm: true
+    enable_add_rmsnorm: true
+    enable_prefetch: false
+    prefetch_size: 33554432
+data_config:
+  dataset: default
+  input_truncated_len: 1024
+  dataset_path: /mnt/workspace/gitCode/cann/cann-learning-hub/qwen3_empirical_roofline_validation/qwen3_empirical_roofline/dataset_long
+parallel_config:
+  world_size: 1
+  attn_tp_size: 1
+  moe_tp_size: 1
+  embed_tp_size: 1
+  lmhead_tp_size: 1
+scheduler_config:
+  max_new_tokens: 64
+  batch_size: 1
+  enable_thinking: false

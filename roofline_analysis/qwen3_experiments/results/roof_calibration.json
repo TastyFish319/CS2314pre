@@ -1,0 +1,75 @@
+{
+  "measured_at": "2026-11-19T16:57:11",
+  "device": "npu:0",
+  "device_name": "Ascend910B3",
+  "dtype": "bfloat16",
+  "torch_version": "2.8.0+cpu",
+  "method": {
+    "compute": "torch.matmul, best of N steady-state iterations (TFLOP/s)",
+    "bandwidth": "device-to-device copy_, read+write traffic (TB/s)"
+  },
+  "peak_tflops_measured": 267.1226792050524,
+  "peak_bandwidth_tb_s_measured": 1.2364023064889635,
+  "ridge_flop_per_byte": 216.0483507699092,
+  "matmul": {
+    "shape": [
+      8192,
+      8192,
+      8192
+    ],
+    "flops_per_iter": 1099511627776.0,
+    "iters": 20,
+    "best_tflops": 267.1226792050524,
+    "median_tflops": 266.3574980641207,
+    "worst_tflops": 260.4286196048953,
+    "sample_ms": [
+      4.222,
+      4.151,
+      4.128,
+      4.123,
+      4.128,
+      4.116,
+      4.128,
+      4.118,
+      4.116,
+      4.121,
+      4.14,
+      4.133,
+      4.14,
+      4.118,
+      4.124,
+      4.121,
+      4.138,
+      4.125,
+      4.166,
+      4.155
+    ]
+  },
+  "bandwidth": {
+    "buffer_bytes": 2147483648,
+    "traffic_per_iter_bytes": 4294967296.0,
+    "iters": 10,
+    "best_tb_s": 1.2364023064889635,
+    "median_tb_s": 1.2343644103311138,
+    "worst_tb_s": 1.2245399480059214,
+    "sample_ms": [
+      3.505,
+      3.49,
+      3.474,
+      3.476,
+      3.49,
+      3.479,
+      3.478,
+      3.476,
+      3.507,
+      3.48
+    ]
+  },
+  "reference": {
+    "peak_tflops": 294.912,
+    "peak_bandwidth_tb_s": 1.6,
+    "compute_ratio_measured_over_reference": 0.9057708035110555,
+    "bandwidth_ratio_measured_over_reference": 0.7727514415556022
+  },
+  "note": "Roof uses the best observed iteration: it is the achievable peak of this software stack on this device, not a datasheet number."
+}

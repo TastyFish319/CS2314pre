@@ -5,3 +5,5 @@
 请组员先阅读 **[简版基础教程](docs/roofline_llm_basics.md)**，了解核心概念，方便后续讨论。
 
 [详细版教程](docs/roofline_llm_tutorial.md)也放在 `docs/` 中，可按需查阅。
+
+汇报材料入口：[最终报告](roofline_analysis/final_report/report.md)、[理论与实验资料导航](roofline_analysis/README.md)、[实测实验资料](roofline_analysis/qwen3_experiments/README.md)。
